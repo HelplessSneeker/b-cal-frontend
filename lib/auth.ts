@@ -80,7 +80,7 @@ export async function getMe(): Promise<User | null> {
     }
 
     const data = await response.json()
-    return { id: data.id, email: data.email }
+    return { id: data.data.id, email: data.data.email }
   } catch {
     return null
   }
