@@ -1,41 +1,20 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { logout, getMe, type User } from "@/lib/auth"
+import { logout } from "@/lib/auth"
+import { useUserStore } from "@/lib/stores/userStore"
+import { AuthProvider } from "@/components/AuthProvider"
 import { Button } from "@/components/ui/button"
 
-export default function Home() {
+function Dashboard() {
   const router = useRouter()
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    getMe().then((userData) => {
-      setUser(userData)
-      setIsLoading(false)
-      if (!userData) {
-        router.push("/login")
-      }
-    })
-  }, [router])
+  const { user, clearUser } = useUserStore()
 
   const handleLogout = async () => {
     await logout()
+    clearUser()
     router.push("/login")
     router.refresh()
-  }
-
-  if (isLoading) {
-    return (
-      <div className="p-6">
-        <p>Loading...</p>
-      </div>
-    )
-  }
-
-  if (!user) {
-    return null
   }
 
   return (
@@ -47,9 +26,17 @@ export default function Home() {
         </Button>
       </div>
       <div className="space-y-2">
-        <p><span className="font-medium">User ID:</span> {user.id}</p>
-        <p><span className="font-medium">Email:</span> {user.email}</p>
+        <p><span className="font-medium">User ID:</span> {user?.id}</p>
+        <p><span className="font-medium">Email:</span> {user?.email}</p>
       </div>
     </div>
+  )
+}
+
+export default function Home() {
+  return (
+    <AuthProvider>
+      <Dashboard />
+    </AuthProvider>
   )
 }
