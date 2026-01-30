@@ -19,6 +19,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { Spinner } from "./ui/spinner"
 
 interface LoginFormProps extends React.ComponentProps<"div"> {
   isSignup?: boolean
@@ -149,7 +150,7 @@ export function LoginForm({
               )}
               <Field>
                 <Button type="submit" disabled={isLoading}>
-                  {isLoading ? "Please wait..." : isSignup ? "Sign Up" : "Login"}
+                  {isLoading ? <Spinner /> : isSignup ? "Sign Up" : "Login"}
                 </Button>
                 <FieldDescription className="text-center">
                   {isSignup ? (
