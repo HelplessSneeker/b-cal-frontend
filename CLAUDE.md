@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-pnpm dev      # Start development server (http://localhost:3000)
+pnpm dev      # Start development server (http://localhost:8080)
 pnpm build    # Production build
 pnpm lint     # Run ESLint
 ```
@@ -17,9 +17,25 @@ This is a Next.js 16 application using the App Router with React 19 and TypeScri
 ### Key Directories
 
 - `app/` - Next.js App Router pages and layouts
+  - `app/login/` - Login page
+  - `app/signup/` - Signup page
 - `components/` - React components
-  - `components/ui/` - shadcn/ui primitives (button, card, input, label, separator, field)
-- `lib/` - Utilities (`lib/utils.ts` contains the `cn()` class merging helper)
+  - `components/ui/` - shadcn/ui primitives (button, card, input, label, separator, field, spinner, loading)
+- `lib/` - Utilities and services
+  - `lib/utils.ts` - `cn()` class merging helper
+  - `lib/auth.ts` - Authentication API functions (login, signup, logout, getMe)
+  - `lib/stores/` - Zustand stores for client state
+
+### Authentication
+
+- Cookie-based auth with a NestJS backend (configured via `NEXT_PUBLIC_BACKEND_URL`)
+- `AuthProvider` component wraps protected routes and redirects unauthenticated users
+- User state managed via Zustand store (`useUserStore`)
+
+### State Management
+
+- Zustand for client-side state (`lib/stores/`)
+- `useUserStore` - Current authenticated user
 
 ### Styling
 

@@ -6,7 +6,8 @@
 
 ### Thecnical todos
 
-- Connect to backend api
+- add lazy loading
+- add caching
  
 ### Design todos
 
@@ -14,12 +15,10 @@
 - create componensts for main page
 - add ui skeletons
 - add animations
-- add loading indicators
-- add lazy loading
+- add backend error and sucess handeling via toasts
 
 ### Other todos
 
-- update Readme
 - think about testing considerations
 - add i18n
 
@@ -31,5 +30,9 @@
 
 ### Design todos
 
+- add loading indicators (added for login and signup page)
+- Connect to backend api (login behaviour is implemented with backend app)
+
 ### other todos
 
+- update Readme (added readme)
