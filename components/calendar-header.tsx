@@ -1,9 +1,12 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { toast } from "sonner"
+import { logout } from "@/lib/auth"
 import { useUserStore } from "@/lib/stores/userStore"
 import { useCalendarStore, CalendarView } from "@/lib/stores/calendarStore"
+import { getWeekNumber } from "@/lib/date-utils"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -20,18 +23,6 @@ function getAvatarInitials(email: string): string {
   const localInitial = localPart?.[0]?.toUpperCase() ?? ""
   const domainInitial = domain?.[0]?.toUpperCase() ?? ""
   return `${localInitial}${domainInitial}`
-}
-
-function getWeekNumber(date: Date): number {
-  const target = new Date(date.valueOf())
-  const dayNumber = (date.getDay() + 6) % 7
-  target.setDate(target.getDate() - dayNumber + 3)
-  const firstThursday = target.valueOf()
-  target.setMonth(0, 1)
-  if (target.getDay() !== 4) {
-    target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7))
-  }
-  return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000)
 }
 
 function formatDateDisplay(date: Date, view: CalendarView): string {
@@ -55,7 +46,8 @@ function formatDateDisplay(date: Date, view: CalendarView): string {
 }
 
 export function CalendarHeader() {
-  const { user } = useUserStore()
+  const router = useRouter()
+  const { user, clearUser } = useUserStore()
   const { view, currentDate, setView, setCurrentDate } = useCalendarStore()
   const initials = user?.email ? getAvatarInitials(user.email) : "?"
 
@@ -85,6 +77,12 @@ export function CalendarHeader() {
 
   const handleAvatarMenuClick = (action: string) => {
     toast.info(`${action} clicked`)
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    clearUser()
+    router.push("/login")
   }
 
   return (
@@ -147,10 +145,7 @@ export function CalendarHeader() {
               Profile
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={() => handleAvatarMenuClick("Logout")}
-            >
+            <DropdownMenuItem variant="destructive" onClick={handleLogout}>
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
