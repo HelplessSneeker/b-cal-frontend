@@ -38,12 +38,15 @@ export function CalendarHeader() {
   }
 
   return (
-    <header className="flex items-center justify-between border-b px-6 py-4">
-      <div className="flex items-center gap-4">
+    <header className="flex items-center justify-between border-b py-4 pr-6">
+      <div className="flex w-64 items-center justify-between pl-4">
         <h1 className="text-2xl font-bold">Calendar</h1>
         <Button variant="outline" size="sm" onClick={handleTodayClick}>
           Today
         </Button>
+      </div>
+
+      <div className="flex flex-1 justify-center">
         <span className="text-muted-foreground">January 2026</span>
       </div>
 
