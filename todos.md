@@ -15,7 +15,8 @@
 - create componensts for main page
 - add ui skeletons
 - add animations
-- add backend error and sucess handeling via toasts
+- add theming
+- add localization 
 
 ### Other todos
 
@@ -27,6 +28,8 @@
 ## Done / Currently implementing todos
 
 ### Thecnical todos
+
+- add backend error and sucess handeling via toasts (sonar and api interceptor)
 
 ### Design todos
 
