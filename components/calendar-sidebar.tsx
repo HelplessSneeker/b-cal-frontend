@@ -3,7 +3,7 @@
 import { PlusIcon } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { SidebarCalendar } from "@/components/sidebar-calendar"
 
 export function CalendarSidebar() {
   const handleNewEntry = () => {
@@ -11,12 +11,12 @@ export function CalendarSidebar() {
   }
 
   return (
-    <aside className="flex w-64 flex-col gap-4 border-r p-4">
-      <Button onClick={handleNewEntry} className="w-full">
+    <aside className="flex w-64 flex-col items-center gap-4 border-r p-4">
+      <Button onClick={handleNewEntry} className="w-full self-stretch">
         <PlusIcon className="mr-2 size-4" />
         New Entry
       </Button>
-      <Calendar />
+      <SidebarCalendar />
     </aside>
   )
 }

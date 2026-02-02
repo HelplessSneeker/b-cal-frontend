@@ -123,3 +123,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Entry indicator dot for calendar days */
+[data-slot="calendar"] .has-entry-indicator button {
+  position: relative;
+}
+
+[data-slot="calendar"] .has-entry-indicator button::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--primary);
+}
