@@ -1,6 +1,4 @@
-// Authentication utilities for NestJS backend
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000"
+import { api, ApiError } from "./api"
 
 export interface User {
   id: string
@@ -10,58 +8,42 @@ export interface User {
 export interface AuthResponse {
   success: boolean
   error?: string
-  user?: User
 }
 
 export async function login(email: string, password: string): Promise<AuthResponse> {
   try {
-    const response = await fetch(`${BACKEND_URL}/auth/login`, {
+    await api("/auth/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ email, password }),
+      body: { email, password },
     })
-
-    if (!response.ok) {
-      const data = await response.json().catch(() => ({}))
-      return { success: false, error: data.message || "Login failed" }
-    }
-
     return { success: true }
-  } catch {
-    return { success: false, error: "Network error. Please try again." }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return { success: false, error: error.message }
+    }
+    return { success: false, error: "An unexpected error occurred" }
   }
 }
 
 export async function signup(email: string, password: string): Promise<AuthResponse> {
   try {
-    const response = await fetch(`${BACKEND_URL}/auth/signup`, {
+    await api("/auth/signup", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ email, password }),
+      body: { email, password },
     })
-
-    if (!response.ok) {
-      const data = await response.json().catch(() => ({}))
-      return { success: false, error: data.message || "Signup failed" }
-    }
-
     return { success: true }
-  } catch {
-    return { success: false, error: "Network error. Please try again." }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return { success: false, error: error.message }
+    }
+    return { success: false, error: "An unexpected error occurred" }
   }
 }
 
 export async function logout(): Promise<void> {
   try {
-    await fetch(`${BACKEND_URL}/auth/logout`, {
+    await api("/auth/logout", {
       method: "POST",
-      credentials: "include",
     })
   } catch {
     // Ignore errors on logout
@@ -70,17 +52,11 @@ export async function logout(): Promise<void> {
 
 export async function getMe(): Promise<User | null> {
   try {
-    const response = await fetch(`${BACKEND_URL}/auth/me`, {
+    const user = await api<User>("/auth/me", {
       method: "GET",
-      credentials: "include",
+      showSuccessToast: false,
     })
-
-    if (!response.ok) {
-      return null
-    }
-
-    const data = await response.json()
-    return { id: data.data.id, email: data.data.email }
+    return user
   } catch {
     return null
   }

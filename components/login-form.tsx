@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 import { login, signup } from "@/lib/auth"
 import { Button } from "@/components/ui/button"
@@ -48,7 +49,6 @@ export function LoginForm({
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,17 +57,16 @@ export function LoginForm({
     if (isSignup) {
       const passwordError = validatePassword(password)
       if (passwordError) {
-        setError(passwordError)
+        toast.error(passwordError)
         return
       }
 
       if (password !== confirmPassword) {
-        setError("Passwords do not match")
+        toast.error("Passwords do not match")
         return
       }
     }
 
-    setError(null)
     setIsLoading(true)
 
     const result = isSignup
@@ -80,8 +79,6 @@ export function LoginForm({
       const redirectTo = searchParams.get("from") || "/"
       router.push(redirectTo)
       router.refresh()
-    } else {
-      setError(result.error || "Authentication failed")
     }
   }
 
@@ -144,9 +141,6 @@ export function LoginForm({
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </Field>
-              )}
-              {error && (
-                <p className="text-sm text-destructive">{error}</p>
               )}
               <Field>
                 <Button type="submit" disabled={isLoading}>
