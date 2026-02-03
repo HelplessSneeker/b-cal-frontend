@@ -1,6 +1,6 @@
 "use client"
 
-import { HOUR_HEIGHT, START_HOUR, END_HOUR } from "@/lib/calendar-constants"
+import { HOUR_HEIGHT, START_HOUR, END_HOUR, TIME_COLUMN_WIDTH } from "@/lib/calendar-constants"
 import { formatHour } from "@/lib/time-utils"
 
 export function TimeColumn() {
@@ -10,7 +10,10 @@ export function TimeColumn() {
   )
 
   return (
-    <div className="flex flex-col text-xs text-muted-foreground">
+    <div
+      className="shrink-0 flex flex-col text-xs text-muted-foreground"
+      style={{ width: TIME_COLUMN_WIDTH }}
+    >
       {hours.map((hour) => (
         <div
           key={hour}

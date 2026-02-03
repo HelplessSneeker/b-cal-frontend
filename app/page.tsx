@@ -5,9 +5,11 @@ import { AuthProvider } from "@/components/AuthProvider"
 import { CalendarHeader } from "@/components/calendar-header"
 import { CalendarSidebar } from "@/components/calendar-sidebar"
 import { DayView } from "@/components/day-view"
+import { WeekView } from "@/components/week-view"
 import { CalendarView, useCalendarStore } from "@/lib/stores/calendarStore"
 
 const mockEntries = [
+  // Tuesday Feb 3
   {
     id: "1",
     title: "Team Standup",
@@ -43,6 +45,45 @@ const mockEntries = [
     endDate: new Date(2026, 1, 3, 16, 45),
     wholeDay: false,
   },
+  // Monday Feb 2
+  {
+    id: "6",
+    title: "Sprint Planning",
+    startDate: new Date(2026, 1, 2, 10, 0),
+    endDate: new Date(2026, 1, 2, 11, 30),
+    wholeDay: false,
+  },
+  // Wednesday Feb 4
+  {
+    id: "7",
+    title: "Design Review",
+    startDate: new Date(2026, 1, 4, 14, 0),
+    endDate: new Date(2026, 1, 4, 15, 30),
+    wholeDay: false,
+  },
+  // Thursday Feb 5
+  {
+    id: "8",
+    title: "1:1 with Manager",
+    startDate: new Date(2026, 1, 5, 11, 0),
+    endDate: new Date(2026, 1, 5, 11, 30),
+    wholeDay: false,
+  },
+  // Friday Feb 6
+  {
+    id: "9",
+    title: "Team Retrospective",
+    startDate: new Date(2026, 1, 6, 15, 0),
+    endDate: new Date(2026, 1, 6, 16, 0),
+    wholeDay: false,
+  },
+  {
+    id: "10",
+    title: "Happy Hour",
+    startDate: new Date(2026, 1, 6, 17, 0),
+    endDate: new Date(2026, 1, 6, 18, 0),
+    wholeDay: false,
+  },
 ]
 
 function CalendarPage() {
@@ -59,7 +100,8 @@ function CalendarPage() {
       <div className="flex flex-1 overflow-hidden">
         <CalendarSidebar />
         <main className="flex-1">
-          {view === CalendarView.Day && (<DayView />)}
+          {view === CalendarView.Day && <DayView />}
+          {view === CalendarView.Week && <WeekView />}
         </main>
       </div>
     </div>
