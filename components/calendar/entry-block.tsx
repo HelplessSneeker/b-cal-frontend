@@ -1,8 +1,8 @@
 "use client"
 
 import { CalendarEntry } from "@/lib/stores/calendarStore"
-import { getEventTopPosition, getEventHeight } from "@/lib/time-utils"
-import { cn } from "@/lib/utils"
+import { getEventTopPosition, getEventHeight } from "@/lib/calendar/time-utils"
+import { cn } from "@/lib/utils/utils"
 
 interface EntryBlockProps {
   entry: CalendarEntry

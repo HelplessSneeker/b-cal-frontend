@@ -3,7 +3,7 @@
 import { type CalendarEntry } from "@/lib/stores/calendarStore"
 import { EntryPreview } from "@/components/calendar/entry-preview"
 import { MoreIndicator } from "@/components/calendar/more-indicator"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/utils"
 
 interface DateCellProps {
   date: Date

@@ -1,5 +1,5 @@
 import { Spinner } from "@/components/ui/spinner"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/utils"
 
 function Loading({ className, ...props }: React.ComponentProps<"div">) {
   return (

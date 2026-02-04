@@ -1,8 +1,8 @@
 "use client"
 
 import { CalendarEntry } from "@/lib/stores/calendarStore"
-import { TIME_COLUMN_WIDTH } from "@/lib/calendar-constants"
-import { cn } from "@/lib/utils"
+import { TIME_COLUMN_WIDTH } from "@/lib/calendar/calendar-constants"
+import { cn } from "@/lib/utils/utils"
 
 interface WeekAllDayRowProps {
   weekDays: Date[]

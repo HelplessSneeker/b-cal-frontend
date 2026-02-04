@@ -1,4 +1,4 @@
-import { HOUR_HEIGHT, START_HOUR } from "@/lib/calendar-constants"
+import { HOUR_HEIGHT, START_HOUR } from "@/lib/calendar/calendar-constants"
 
 export function getEventTopPosition(startTime: Date): number {
   const hours = startTime.getHours()

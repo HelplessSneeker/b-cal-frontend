@@ -19,7 +19,7 @@ import {
   createEntry as createEntryApi,
   updateEntry as updateEntryApi,
   deleteEntry as deleteEntryApi,
-} from "@/lib/calendar"
+} from "@/lib/api/calendar"
 
 function formatDateTimeLocal(date: Date): string {
   return format(date, "yyyy-MM-dd'T'HH:mm")

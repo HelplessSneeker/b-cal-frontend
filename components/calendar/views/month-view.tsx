@@ -5,9 +5,9 @@ import {
   CalendarView,
   type CalendarEntry,
 } from "@/lib/stores/calendarStore"
-import { getMonthGridDates } from "@/lib/date-utils"
+import { getMonthGridDates } from "@/lib/calendar/date-utils"
 import { DateCell } from "@/components/calendar/date-cell"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/utils"
 
 function isSameDay(a: Date, b: Date): boolean {
   return (

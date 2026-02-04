@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getEventTopPosition } from "@/lib/time-utils"
+import { getEventTopPosition } from "@/lib/calendar/time-utils"
 
 interface CurrentTimeIndicatorProps {
   date: Date

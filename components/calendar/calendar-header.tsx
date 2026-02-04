@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation"
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { toast } from "sonner"
-import { logout } from "@/lib/auth"
+import { logout } from "@/lib/api/auth"
 import { useUserStore } from "@/lib/stores/userStore"
 import { useCalendarStore, CalendarView } from "@/lib/stores/calendarStore"
-import { getWeekNumber } from "@/lib/date-utils"
+import { getWeekNumber } from "@/lib/calendar/date-utils"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {

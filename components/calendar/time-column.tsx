@@ -1,7 +1,7 @@
 "use client"
 
-import { HOUR_HEIGHT, START_HOUR, END_HOUR, TIME_COLUMN_WIDTH } from "@/lib/calendar-constants"
-import { formatHour } from "@/lib/time-utils"
+import { HOUR_HEIGHT, START_HOUR, END_HOUR, TIME_COLUMN_WIDTH } from "@/lib/calendar/calendar-constants"
+import { formatHour } from "@/lib/calendar/time-utils"
 
 export function TimeColumn() {
   const hours = Array.from(

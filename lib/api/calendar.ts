@@ -1,5 +1,5 @@
 import { api, ApiError } from "./api"
-import type { CalendarEntry } from "./stores/calendarStore"
+import type { CalendarEntry } from "@/lib/stores/calendarStore"
 
 interface EntryDTO {
   id: string

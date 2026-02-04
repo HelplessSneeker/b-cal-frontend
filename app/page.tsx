@@ -9,7 +9,7 @@ import { WeekView } from "@/components/calendar/views/week-view"
 import { MonthView } from "@/components/calendar/views/month-view"
 import { CalendarView, useCalendarStore } from "@/lib/stores/calendarStore"
 import { EntryModal } from "@/components/entry-modal"
-import { getEntries } from "@/lib/calendar"
+import { getEntries } from "@/lib/api/calendar"
 
 function CalendarPage() {
   const { setEntries, view } = useCalendarStore()

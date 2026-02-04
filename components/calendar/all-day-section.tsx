@@ -1,7 +1,7 @@
 "use client"
 
 import { CalendarEntry } from "@/lib/stores/calendarStore"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/utils"
 
 interface AllDaySectionProps {
   entries: CalendarEntry[]

@@ -5,8 +5,8 @@ import { useCalendarStore, type CalendarEntry } from "@/lib/stores/calendarStore
 import { TimeGrid } from "@/components/calendar/time-grid"
 import { DayColumn } from "@/components/calendar/day-column"
 import { WeekAllDayRow } from "@/components/calendar/week-all-day-row"
-import { getStartOfWeek } from "@/lib/date-utils"
-import { TIME_COLUMN_WIDTH } from "@/lib/calendar-constants"
+import { getStartOfWeek } from "@/lib/calendar/date-utils"
+import { TIME_COLUMN_WIDTH } from "@/lib/calendar/calendar-constants"
 
 function isSameDay(a: Date, b: Date): boolean {
   return (

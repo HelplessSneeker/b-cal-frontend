@@ -8,17 +8,24 @@ import {
   getEndOfWeek,
   getStartOfMonth,
   getEndOfMonth,
-} from "@/lib/date-utils"
+} from "@/lib/calendar/date-utils"
 import type { DateRange } from "react-day-picker"
 
-// Mock data for entry indicators
-const MOCK_ENTRIES = [
-  new Date(2026, 1, 7), // Feb 7, 2026
-  new Date(2026, 1, 10), // Feb 10, 2026
-]
-
 export function SidebarCalendar() {
-  const { view, currentDate, setCurrentDate } = useCalendarStore()
+  const { view, currentDate, setCurrentDate, entries } = useCalendarStore()
+
+  // Get unique dates that have entries
+  const entryDates = useMemo(() => {
+    const dates = new Set<string>()
+    entries.forEach((entry) => {
+      const date = new Date(entry.startDate)
+      dates.add(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`)
+    })
+    return Array.from(dates).map((key) => {
+      const [year, month, day] = key.split("-").map(Number)
+      return new Date(year, month, day)
+    })
+  }, [entries])
 
   // Calculate the visual range based on current view
   const selectedRange = useMemo((): DateRange | undefined => {
@@ -67,7 +74,7 @@ export function SidebarCalendar() {
       month={currentDate}
       onMonthChange={setCurrentDate}
       modifiers={{
-        hasEntry: MOCK_ENTRIES,
+        hasEntry: entryDates,
       }}
       modifiersClassNames={{
         hasEntry: "has-entry-indicator",

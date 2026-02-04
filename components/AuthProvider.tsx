@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { getMe } from "@/lib/auth"
+import { getMe } from "@/lib/api/auth"
 import { useUserStore } from "@/lib/stores/userStore"
 import { Loading } from "@/components/ui/loading"
 

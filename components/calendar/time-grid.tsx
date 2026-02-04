@@ -3,7 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { TimeColumn } from "@/components/calendar/time-column"
-import { HOUR_HEIGHT } from "@/lib/calendar-constants"
+import { HOUR_HEIGHT } from "@/lib/calendar/calendar-constants"
 
 interface TimeGridProps {
   children: ReactNode

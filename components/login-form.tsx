@@ -3,8 +3,8 @@
 import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { toast } from "sonner"
-import { cn } from "@/lib/utils"
-import { login, signup } from "@/lib/auth"
+import { cn } from "@/lib/utils/utils"
+import { login, signup } from "@/lib/api/auth"
 import { Button } from "@/components/ui/button"
 import {
   Card,
