@@ -2,10 +2,10 @@
 
 import { useEffect } from "react"
 import { AuthProvider } from "@/components/AuthProvider"
-import { CalendarHeader } from "@/components/calendar-header"
-import { CalendarSidebar } from "@/components/calendar-sidebar"
-import { DayView } from "@/components/day-view"
-import { WeekView } from "@/components/week-view"
+import { CalendarHeader } from "@/components/calendar/calendar-header"
+import { CalendarSidebar } from "@/components/calendar/calendar-sidebar"
+import { DayView } from "@/components/calendar/views/day-view"
+import { WeekView } from "@/components/calendar/views/week-view"
 import { CalendarView, useCalendarStore } from "@/lib/stores/calendarStore"
 
 const mockEntries = [

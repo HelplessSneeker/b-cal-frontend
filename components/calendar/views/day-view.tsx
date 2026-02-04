@@ -1,8 +1,8 @@
 "use client"
 
 import { useCalendarStore, type CalendarEntry } from "@/lib/stores/calendarStore"
-import { TimeGrid } from "@/components/time-grid"
-import { DayColumn } from "@/components/day-column"
+import { TimeGrid } from "@/components/calendar/time-grid"
+import { DayColumn } from "@/components/calendar/day-column"
 
 function isSameDay(a: Date, b: Date): boolean {
   return (

@@ -1,8 +1,8 @@
 "use client"
 
 import { useCalendarStore, type CalendarEntry } from "@/lib/stores/calendarStore"
-import { TimeGrid } from "@/components/time-grid"
-import { DayColumn } from "@/components/day-column"
+import { TimeGrid } from "@/components/calendar/time-grid"
+import { DayColumn } from "@/components/calendar/day-column"
 import { getStartOfWeek } from "@/lib/date-utils"
 import { TIME_COLUMN_WIDTH } from "@/lib/calendar-constants"
 

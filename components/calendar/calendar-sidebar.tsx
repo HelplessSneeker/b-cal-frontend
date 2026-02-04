@@ -3,7 +3,7 @@
 import { PlusIcon } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import { SidebarCalendar } from "@/components/sidebar-calendar"
+import { SidebarCalendar } from "@/components/calendar/sidebar-calendar"
 
 export function CalendarSidebar() {
   const handleNewEntry = () => {

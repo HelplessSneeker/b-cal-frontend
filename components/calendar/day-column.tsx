@@ -1,9 +1,9 @@
 "use client"
 
 import { CalendarEntry } from "@/lib/stores/calendarStore"
-import { TimeSlot } from "@/components/time-slot"
-import { EntryBlock } from "@/components/entry-block"
-import { CurrentTimeIndicator } from "@/components/current-time-indicator"
+import { TimeSlot } from "@/components/calendar/time-slot"
+import { EntryBlock } from "@/components/calendar/entry-block"
+import { CurrentTimeIndicator } from "@/components/calendar/current-time-indicator"
 
 interface DayColumnProps {
   date: Date
