@@ -6,6 +6,7 @@ import { CalendarHeader } from "@/components/calendar/calendar-header"
 import { CalendarSidebar } from "@/components/calendar/calendar-sidebar"
 import { DayView } from "@/components/calendar/views/day-view"
 import { WeekView } from "@/components/calendar/views/week-view"
+import { MonthView } from "@/components/calendar/views/month-view"
 import { CalendarView, useCalendarStore } from "@/lib/stores/calendarStore"
 
 const mockEntries = [
@@ -75,7 +76,7 @@ const mockEntries = [
     title: "Team Retrospective",
     startDate: new Date(2026, 1, 6, 15, 0),
     endDate: new Date(2026, 1, 6, 16, 0),
-    wholeDay: false,
+    wholeDay: true,
   },
   {
     id: "10",
@@ -84,6 +85,13 @@ const mockEntries = [
     endDate: new Date(2026, 1, 6, 18, 0),
     wholeDay: false,
   },
+  {
+    id: "11",
+    title: "whole day test",
+    startDate: new Date(2026, 1, 6, 0, 0),
+    endDate: new Date(2026, 1, 7, 23, 0),
+    wholeDay: true,
+  }
 ]
 
 function CalendarPage() {
@@ -102,6 +110,7 @@ function CalendarPage() {
         <main className="flex-1">
           {view === CalendarView.Day && <DayView />}
           {view === CalendarView.Week && <WeekView />}
+          {view === CalendarView.Month && <MonthView />}
         </main>
       </div>
     </div>

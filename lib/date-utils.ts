@@ -50,3 +50,18 @@ export function getWeekNumber(date: Date): number {
   }
   return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000)
 }
+
+/**
+ * Get all 42 dates (6 rows x 7 days) for the month grid view.
+ * The grid always starts on Monday and includes days from
+ * previous/next months to fill the complete 6-week grid.
+ */
+export function getMonthGridDates(date: Date): Date[] {
+  const firstOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
+  const gridStart = getStartOfWeek(firstOfMonth)
+  return Array.from({ length: 42 }, (_, i) => {
+    const day = new Date(gridStart)
+    day.setDate(gridStart.getDate() + i)
+    return day
+  })
+}
