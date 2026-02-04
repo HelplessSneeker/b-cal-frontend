@@ -23,7 +23,7 @@ function formatDayHeader(date: Date): string {
 }
 
 export function DayView() {
-  const { currentDate, entries } = useCalendarStore()
+  const { currentDate, entries, openEntryModal } = useCalendarStore()
 
   const dayEntries = entries.filter((entry) =>
     isSameDay(entry.startDate, currentDate)
@@ -33,13 +33,11 @@ export function DayView() {
   const timedEntries = dayEntries.filter((entry) => !entry.wholeDay)
 
   const handleSlotClick = (time: Date) => {
-    // TODO: Open entry creation modal
-    console.log("Slot clicked:", time)
+    openEntryModal(undefined, time)
   }
 
   const handleEntryClick = (entry: CalendarEntry) => {
-    // TODO: Open entry detail popover/modal
-    console.log("Entry clicked:", entry)
+    openEntryModal(entry)
   }
 
   return (

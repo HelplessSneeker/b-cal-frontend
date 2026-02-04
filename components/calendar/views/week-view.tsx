@@ -50,7 +50,7 @@ function entryOverlapsDay(entry: CalendarEntry, day: Date): boolean {
 }
 
 export function WeekView() {
-  const { currentDate, entries } = useCalendarStore()
+  const { currentDate, entries, openEntryModal } = useCalendarStore()
 
   const startOfWeek = getStartOfWeek(currentDate)
   const weekDays = getWeekDays(startOfWeek)
@@ -78,13 +78,11 @@ export function WeekView() {
   }
 
   const handleSlotClick = (time: Date) => {
-    // TODO: Open entry creation modal
-    console.log("Slot clicked:", time)
+    openEntryModal(undefined, time)
   }
 
   const handleEntryClick = (entry: CalendarEntry) => {
-    // TODO: Open entry detail popover/modal
-    console.log("Entry clicked:", entry)
+    openEntryModal(entry)
   }
 
   return (

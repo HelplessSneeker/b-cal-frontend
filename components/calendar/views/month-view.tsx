@@ -20,7 +20,7 @@ function isSameDay(a: Date, b: Date): boolean {
 const WEEKDAY_NAMES = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
 
 export function MonthView() {
-  const { currentDate, entries, setView, setCurrentDate } = useCalendarStore()
+  const { currentDate, entries, setView, setCurrentDate, openEntryModal } = useCalendarStore()
 
   const gridDates = getMonthGridDates(currentDate)
   const currentMonth = currentDate.getMonth()
@@ -43,13 +43,13 @@ export function MonthView() {
   }
 
   const handleEntryClick = (entry: CalendarEntry) => {
-    // TODO: Open entry detail popover/modal
-    console.log("Entry clicked:", entry)
+    openEntryModal(entry)
   }
 
   const handleCellClick = (date: Date) => {
-    // TODO: Open entry creation modal
-    console.log("Cell clicked:", date)
+    const startTime = new Date(date)
+    startTime.setHours(9, 0, 0, 0)
+    openEntryModal(undefined, startTime)
   }
 
   return (

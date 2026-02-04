@@ -1,13 +1,15 @@
 "use client"
 
 import { PlusIcon } from "lucide-react"
-import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { SidebarCalendar } from "@/components/calendar/sidebar-calendar"
+import { useCalendarStore } from "@/lib/stores/calendarStore"
 
 export function CalendarSidebar() {
+  const { openEntryModal } = useCalendarStore()
+
   const handleNewEntry = () => {
-    toast.info("New Entry clicked")
+    openEntryModal()
   }
 
   return (
