@@ -1,8 +1,10 @@
 "use client"
 
+import { useMemo } from "react"
 import { useCalendarStore, type CalendarEntry } from "@/lib/stores/calendarStore"
 import { TimeGrid } from "@/components/calendar/time-grid"
 import { DayColumn } from "@/components/calendar/day-column"
+import { WeekAllDayRow } from "@/components/calendar/week-all-day-row"
 import { getStartOfWeek } from "@/lib/date-utils"
 import { TIME_COLUMN_WIDTH } from "@/lib/calendar-constants"
 
@@ -33,14 +35,46 @@ function isToday(date: Date): boolean {
   return isSameDay(date, today)
 }
 
+function entryOverlapsDay(entry: CalendarEntry, day: Date): boolean {
+  const dayStart = new Date(day)
+  dayStart.setHours(0, 0, 0, 0)
+  const dayEnd = new Date(day)
+  dayEnd.setHours(23, 59, 59, 999)
+
+  const entryStart = new Date(entry.startDate)
+  entryStart.setHours(0, 0, 0, 0)
+  const entryEnd = new Date(entry.endDate)
+  entryEnd.setHours(23, 59, 59, 999)
+
+  return entryStart <= dayEnd && entryEnd >= dayStart
+}
+
 export function WeekView() {
   const { currentDate, entries } = useCalendarStore()
 
   const startOfWeek = getStartOfWeek(currentDate)
   const weekDays = getWeekDays(startOfWeek)
 
-  const getEntriesForDay = (day: Date): CalendarEntry[] => {
-    return entries.filter((entry) => isSameDay(entry.startDate, day))
+  const allDayEntriesByDay = useMemo(() => {
+    const map = new Map<string, CalendarEntry[]>()
+    const allDayEntries = entries.filter((entry) => entry.wholeDay)
+
+    weekDays.forEach((day) => {
+      const dayEntries = allDayEntries.filter((entry) =>
+        entryOverlapsDay(entry, day)
+      )
+      if (dayEntries.length > 0) {
+        map.set(day.toDateString(), dayEntries)
+      }
+    })
+
+    return map
+  }, [entries, weekDays])
+
+  const getTimedEntriesForDay = (day: Date): CalendarEntry[] => {
+    return entries.filter(
+      (entry) => isSameDay(entry.startDate, day) && !entry.wholeDay
+    )
   }
 
   const handleSlotClick = (time: Date) => {
@@ -86,6 +120,12 @@ export function WeekView() {
           })}
         </div>
       </div>
+      {/* All-day entries row */}
+      <WeekAllDayRow
+        weekDays={weekDays}
+        entriesByDay={allDayEntriesByDay}
+        onEntryClick={handleEntryClick}
+      />
       {/* Time grid with day columns */}
       <div className="flex-1 overflow-hidden">
         <TimeGrid>
@@ -94,7 +134,7 @@ export function WeekView() {
               <div key={day.toISOString()} className="flex-1 border-l">
                 <DayColumn
                   date={day}
-                  entries={getEntriesForDay(day)}
+                  entries={getTimedEntriesForDay(day)}
                   onSlotClick={handleSlotClick}
                   onEntryClick={handleEntryClick}
                 />

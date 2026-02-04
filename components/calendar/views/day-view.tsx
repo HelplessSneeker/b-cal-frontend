@@ -3,6 +3,7 @@
 import { useCalendarStore, type CalendarEntry } from "@/lib/stores/calendarStore"
 import { TimeGrid } from "@/components/calendar/time-grid"
 import { DayColumn } from "@/components/calendar/day-column"
+import { AllDaySection } from "@/components/calendar/all-day-section"
 
 function isSameDay(a: Date, b: Date): boolean {
   return (
@@ -28,6 +29,9 @@ export function DayView() {
     isSameDay(entry.startDate, currentDate)
   )
 
+  const allDayEntries = dayEntries.filter((entry) => entry.wholeDay)
+  const timedEntries = dayEntries.filter((entry) => !entry.wholeDay)
+
   const handleSlotClick = (time: Date) => {
     // TODO: Open entry creation modal
     console.log("Slot clicked:", time)
@@ -45,11 +49,12 @@ export function DayView() {
           {formatDayHeader(currentDate)}
         </h2>
       </div>
+      <AllDaySection entries={allDayEntries} onEntryClick={handleEntryClick} />
       <div className="flex-1 overflow-hidden">
         <TimeGrid>
           <DayColumn
             date={currentDate}
-            entries={dayEntries}
+            entries={timedEntries}
             onSlotClick={handleSlotClick}
             onEntryClick={handleEntryClick}
           />
