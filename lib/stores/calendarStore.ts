@@ -29,6 +29,7 @@ interface CalendarState {
   closeEntryModal: () => void
   addEntry: (entry: CalendarEntry) => void
   updateEntry: (entry: CalendarEntry) => void
+  deleteEntry: (id: string) => void
 }
 
 export const useCalendarStore = create<CalendarState>((set) => ({
@@ -53,5 +54,9 @@ export const useCalendarStore = create<CalendarState>((set) => ({
   updateEntry: (entry) =>
     set((state) => ({
       entries: state.entries.map((e) => (e.id === entry.id ? entry : e)),
+    })),
+  deleteEntry: (id) =>
+    set((state) => ({
+      entries: state.entries.filter((e) => e.id !== id),
     })),
 }))

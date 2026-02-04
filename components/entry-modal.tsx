@@ -15,6 +15,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { useCalendarStore, type CalendarEntry } from "@/lib/stores/calendarStore"
+import {
+  createEntry as createEntryApi,
+  updateEntry as updateEntryApi,
+  deleteEntry as deleteEntryApi,
+} from "@/lib/calendar"
 
 function formatDateTimeLocal(date: Date): string {
   return format(date, "yyyy-MM-dd'T'HH:mm")
@@ -38,9 +43,11 @@ interface EntryFormProps {
   defaultStartDate: Date | null
   onSubmit: (entry: CalendarEntry) => void
   onCancel: () => void
+  onDelete?: () => void
+  isSubmitting?: boolean
 }
 
-function EntryForm({ editingEntry, defaultStartDate, onSubmit, onCancel }: EntryFormProps) {
+function EntryForm({ editingEntry, defaultStartDate, onSubmit, onCancel, onDelete, isSubmitting }: EntryFormProps) {
   const initialValues = useMemo(() => {
     if (editingEntry) {
       return {
@@ -174,10 +181,21 @@ function EntryForm({ editingEntry, defaultStartDate, onSubmit, onCancel }: Entry
       </FieldGroup>
 
       <DialogFooter className="mt-6">
-        <Button type="button" variant="outline" onClick={onCancel}>
+        {onDelete && (
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={onDelete}
+            disabled={isSubmitting}
+            className="mr-auto"
+          >
+            Delete
+          </Button>
+        )}
+        <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
           Cancel
         </Button>
-        <Button type="submit">
+        <Button type="submit" disabled={isSubmitting}>
           {editingEntry ? "Save" : "Create"}
         </Button>
       </DialogFooter>
@@ -193,15 +211,49 @@ export function EntryModal() {
     closeEntryModal,
     addEntry,
     updateEntry,
+    deleteEntry,
   } = useCalendarStore()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (entry: CalendarEntry) => {
-    if (editingEntry) {
-      updateEntry(entry)
-    } else {
-      addEntry(entry)
+  const handleSubmit = async (entry: CalendarEntry) => {
+    setIsSubmitting(true)
+    try {
+      if (editingEntry) {
+        const updated = await updateEntryApi(entry)
+        if (updated) {
+          updateEntry(updated)
+          closeEntryModal()
+        }
+      } else {
+        const created = await createEntryApi({
+          title: entry.title,
+          startDate: entry.startDate,
+          endDate: entry.endDate,
+          wholeDay: entry.wholeDay,
+          content: entry.content,
+        })
+        if (created) {
+          addEntry(created)
+          closeEntryModal()
+        }
+      }
+    } finally {
+      setIsSubmitting(false)
     }
-    closeEntryModal()
+  }
+
+  const handleDelete = async () => {
+    if (!editingEntry) return
+    setIsSubmitting(true)
+    try {
+      const result = await deleteEntryApi(editingEntry.id)
+      if (result.success) {
+        deleteEntry(editingEntry.id)
+        closeEntryModal()
+      }
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const formKey = useMemo(() => {
@@ -224,6 +276,8 @@ export function EntryModal() {
             defaultStartDate={defaultStartDate}
             onSubmit={handleSubmit}
             onCancel={closeEntryModal}
+            onDelete={editingEntry ? handleDelete : undefined}
+            isSubmitting={isSubmitting}
           />
         )}
       </DialogContent>
